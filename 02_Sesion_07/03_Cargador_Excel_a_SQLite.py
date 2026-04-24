@@ -4,10 +4,10 @@ import os
 
 # ⚙️ CONFIGURACIÓN INICIAL
 EXCEL_FILE = '04_Ventas_Datos_Limpios_S03.xlsx'
-DATABASE_FILE = 'Novamarket_S07.db'
+DATABASE_FILE = 'Novamarket_S07_joseluis.db'
 
 def cargar_y_modelar():
-    print(f"🚀 Iniciando carga desde: {EXCEL_FILE}...")
+    print(f"Iniciando carga desde: {EXCEL_FILE}...")
     
     try:
         # 1. LEER LOS DATOS (Limpios de Sesión 3)
@@ -16,12 +16,12 @@ def cargar_y_modelar():
         
         # 2. CONSTRUIR DIMENSIONES (NORMALIZACIÓN)
         # Separamos los 4 productos únicos para el diccionario
-        print("🔨 Creando Diccionario de Productos...")
+        print("Creando Diccionario de Productos...")
         dim_producto = df[['Producto', 'Categoria']].drop_duplicates().sort_values('Categoria').groupby('Producto').first().reset_index()
         dim_producto.insert(0, 'ProductoID', range(1, len(dim_producto) + 1))
         
         # Separamos las 6 ciudades únicas para el diccionario
-        print("🔨 Creando Diccionario de Ciudades...")
+        print("Creando Diccionario de Ciudades...")
         dim_ciudad = df[['Ciudad']].drop_duplicates().reset_index(drop=True)
         dim_ciudad.insert(0, 'CiudadID', range(1, len(dim_ciudad) + 1))
         
@@ -35,7 +35,7 @@ def cargar_y_modelar():
         
         # 3. CREAR TABLA DE HECHOS (FACTVENTAS)
         # Unimos todo usando IDs para que la base de datos sea eficiente
-        print("🔨 Realizando el modelado final...")
+        print("Realizando el modelado final...")
         fact_ventas = df.copy()
         
         # Mapeamos los IDs de forma segura (buscando por nombre)
@@ -57,12 +57,12 @@ def cargar_y_modelar():
         dim_ciudad.to_sql('DimCiudad',     conn, if_exists='replace', index=False)
         fact_ventas.to_sql('FactVentas',   conn, if_exists='replace', index=False)
         
-        print(f"✅ ¡Éxito! Base de Datos '{DATABASE_FILE}' creada.")
-        print(f"📊 Resumen: Sales: {len(fact_ventas)} | Ciudades: {len(dim_ciudad)} | Productos: {len(dim_producto)}")
+        print(f"Exito! Base de Datos '{DATABASE_FILE}' creada.")
+        print(f"Resumen: Sales: {len(fact_ventas)} | Ciudades: {len(dim_ciudad)} | Productos: {len(dim_producto)}")
         conn.close()
         
     except Exception as e:
-        print(f"❌ Error durante la carga: {e}")
+        print(f"Error durante la carga: {e}")
 
 if __name__ == "__main__":
     if os.path.exists(EXCEL_FILE):

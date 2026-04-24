@@ -4,25 +4,25 @@
             "previewLimit": 50,
             "driver": "SQLite",
             "name": "Sesion_06",
-            "database": "${workspaceFolder:SQL}/01_Sesion_06/01_Base_Datos_S06.db"
+            "database": "${workspaceFolder}/SQL_NovaMarket/01_Sesion_06/Basedatos06.db"
         },
         {
             "previewLimit": 50,
             "driver": "SQLite",
             "name": "Sesion_07",
-            "database": "${workspaceFolder:SQL}/02_Sesion_07/Novamarket_S07.db"
+            "database": "${workspaceFolder}/SQL_NovaMarket/02_Sesion_07/Novamarket_S07.db"
         },
         {
             "previewLimit": 50,
             "driver": "SQLite",
             "name": "conexión1",
-            "database": "${workspaceFolder:SQL}/01_Sesion_06/Base_Datos_Ejemplo.db"
+            "database": "${workspaceFolder}/SQL_NovaMarket/01_Sesion_06/Base_Datos_Ejemplo.db"
         },
         {
             "previewLimit": 50,
             "driver": "SQLite",
             "name": "conexion2",
-            "database": "${workspaceFolder:SQL}/02_Sesion_07/Novamarket_S07.db"
+            "database": "${workspaceFolder}/SQL_NovaMarket/02_Sesion_07/Novamarket_S07.db"
         }
     ],
     "sqltools.useNodeRuntime": true

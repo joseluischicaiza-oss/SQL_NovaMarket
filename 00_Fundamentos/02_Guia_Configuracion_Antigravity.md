@@ -20,30 +20,21 @@ Esta guía te permitirá configurar tu entorno profesional de análisis de datos
     git config --global user.name "Tu Nombre Real"
     git config --global user.email "tu@email.com"
     ```
+    > **💡 ¿Qué significa `--global`?**
+    > Es como firmar tu carnet de identidad. Al ponerlo global, le dices a tu computadora que **todos** los proyectos que hagas de aquí en adelante llevarán tu firma automáticamente. Solo lo haces una vez.
 
 ---
 
-## Paso 1: Visualización y Herramientas (VS Code) 🧩
-| Pregunta | Respuesta |
-|---|---|
-| **¿Dónde?** | En el menú de Extensiones de VS Code (`Cmd + Shift + X`). |
-| **¿Qué?** | Instalar SQLTools y SQLite Viewer. |
-| **¿Cuándo?** | **Una sola vez** antes de empezar a programar. |
-| **¿Por qué?** | Para poder ejecutar SQL con un clic y ver tus tablas como si fueran Excel. |
-
-**Extensiones necesarias:**
-*   **SQLTools** + **SQLTools SQLite Driver** (Autor: Matheus Teixeira).
-*   **SQLite Viewer** (Autor: florianpircher).
-
----
-
-## Paso 2: El Motor de Datos (Python) 🐍
+## Paso 1: El Motor de Datos (Python) 🐍
 | Pregunta | Respuesta |
 |---|---|
 | **¿Dónde?** | En la Terminal de VS Code (**Cualquier carpeta**). |
 | **¿Qué?** | Instalar Python y las librerías de datos (`pandas`, `openpyxl`). |
 | **¿Cuándo?** | **Una sola vez** antes de ejecutar scripts `.py`. |
 | **¿Por qué?** | Python es el motor que transforma archivos Excel en bases de datos `.db`. |
+
+> **💡 En otras palabras:**
+> Python es el "traductor". Toma los datos que están en Excel (que SQL no puede leer directamente) y los traduce al formato de base de datos `.db` que usaremos en clase.
 
 **Instrucción:**
 1.  **Descargar:** Baja el instalador de la web oficial.
@@ -60,7 +51,43 @@ Esta guía te permitirá configurar tu entorno profesional de análisis de datos
 
 ---
 
-## Paso 3: Tu Espacio de Trabajo (Fork & Clone) 🍴
+## Paso 2: El Motor de Ejecución (Node.js) ⚙️
+| Pregunta | Respuesta |
+|---|---|
+| **¿Dónde?** | En la web oficial de Node.js y luego en la Terminal. |
+| **¿Qué?** | Instalar el "entorno de ejecución" Node.js. |
+| **¿Cuándo?** | **Una sola vez** antes de instalar las extensiones de VS Code. |
+| **¿Por qué?** | SQLTools usa Node.js para poder leer tus archivos `.db` sin errores. |
+
+**Instrucción:**
+1.  **Descargar:** Entra a [https://nodejs.org/](https://nodejs.org/) y descarga la versión que dice **"LTS"** (es la más estable).
+2.  **Instalar:** Ejecuta el instalador y presiona "Siguiente" a todo. 
+3.  **Verificar:** En la terminal de VS Code, escribe:
+    ```bash
+    node --version
+    ```
+    *Si te sale un número (ej: v20.12.0), ¡estás listo para el siguiente paso!*
+
+> [!CAUTION]
+> **ORDEN CRÍTICO:** Debes completar este paso ANTES de configurar SQLTools en el siguiente paso. Si lo haces al revés, entrarás en un ciclo de errores infinito.
+
+---
+
+## Paso 3: Visualización y Herramientas (VS Code) 🧩
+| Pregunta | Respuesta |
+|---|---|
+| **¿Dónde?** | En el menú de Extensiones de VS Code (`Cmd + Shift + X`). |
+| **¿Qué?** | Instalar SQLTools y SQLite Viewer. |
+| **¿Cuándo?** | **Una sola vez** después de instalar Node.js. |
+| **¿Por qué?** | Estas herramientas te permiten ver tus tablas como si fueran Excel y ejecutar código SQL. |
+
+**Extensiones necesarias:**
+*   **SQLTools** + **SQLTools SQLite Driver** (Autor: Matheus Teixeira).
+*   **SQLite Viewer** (Autor: florianpircher).
+
+---
+
+## Paso 4: Tu Espacio de Trabajo (Fork & Clone) 🍴
 | Pregunta | Respuesta |
 |---|---|
 | **¿Dónde?** | En el navegador (GitHub) y luego en la Terminal de VS Code. |
@@ -81,29 +108,12 @@ Esta guía te permitirá configurar tu entorno profesional de análisis de datos
 
 ---
 
-## Paso 4: Guardar tu Trabajo (Add, Commit & Push) 🚀
-| Pregunta | Respuesta |
-|---|---|
-| **¿Dónde?** | En la Terminal de VS Code (**Carpeta Raíz del proyecto**). |
-| **¿Qué?** | Comandos `add`, `commit` y `push`. |
-| **¿Cuándo?** | **Cada vez** que termines un ejercicio o termine la clase. |
-| **¿Por qué?** | Para que tu avance se guarde en la nube y el profesor pueda calificarlo. |
-
-**Instrucción (El ciclo de 3 pasos):**
-```bash
-git add .
-git commit -m "Solución Sesión 07 terminada"
-git push origin main
-```
-
----
-
 ## Paso 4.5: Recibir Material Nuevo (Sync & Pull) 📥
 | Pregunta | Respuesta |
 |---|---|
 | **¿Dónde?** | En la Terminal de VS Code (**Carpeta Raíz del proyecto**). |
 | **¿Qué?** | Comando `git pull upstream main`. |
-| **¿Cuándo?** | **Al inicio de cada clase** o cuando el profesor avise que hay material nuevo. |
+| **¿Cuándo?** | **Al inicio de cada clase** para bajar la base de datos y el laboratorio nuevo. |
 | **¿Por qué?** | Para descargar guías y laboratorios nuevos directamente del profesor a tu PC. |
 
 **Instrucción:**
@@ -114,13 +124,40 @@ git pull upstream main
 
 ---
 
-## Paso 5: Conexión a la Base de Datos ⚡
+## Paso 5: El Origen de tus Datos (.db) 💡
+| Pregunta | Respuesta |
+|---|---|
+| **¿Dónde?** | En la Terminal de VS Code (Dentro de la carpeta de la sesión). |
+| **¿Qué?** | Crear o generar el archivo físico de la base de datos `.db`. |
+| **¿Cuándo?** | **Al inicio de cada laboratorio**, antes de conectar SQLTools. |
+| **¿Por qué?** | Sin el archivo `.db`, SQLTools no tendrá datos que mostrar y dará error. |
+
+**Instrucción de Ubicación:**
+Antes de crear el archivo, debes estar "parado" dentro de la carpeta de la sesión:
+*   **Opción A (Rápida):** Clic derecho sobre la carpeta en el explorador $\rightarrow$ **"Open in Integrated Terminal"**.
+*   **Opción B (Comando `cd`):** Escribe `cd` seguido del nombre de la carpeta (ej: `cd 01_Sesion_06`).
+*   *Verificación:* Escribe `ls` (Mac) o `dir` (Windows) para confirmar que ves los archivos de esa sesión.
+
+**Instrucción de Creación:**
+*   **Sesión 06 (Manual):**
+    1.  **Terminal:** Escribe `sqlite3 01_Base_Datos_S06.db "VACUUM;"`.
+    2.  **Explorador:** Clic en **"Nuevo Archivo"**, ponle el nombre exacto terminando en `.db`.
+*   **Sesión 07 (Automática):**
+    1.  Ejecuta el script de Python proporcionado (ej: `05_Puente_S07.py`) para transformar el Excel en una base de datos `.db`.
+
+> [!IMPORTANT]
+> **REGLA DE ORO DE LOS NOMBRES:** Para que el profesor identifique tu trabajo, **debes incluir tu nombre** en el archivo (ej: `01_Base_Datos_S06_TuNombre.db` o `Novamarket_S07_TuNombre.db`). Solo los archivos que empiecen con estos nombres oficiales se subirán a GitHub; cualquier otro nombre será ignorado.
+
+
+---
+
+## Paso 6: Conexión a la Base de Datos ⚡
 | Pregunta | Respuesta |
 |---|---|
 | **¿Dónde?** | En el panel de SQLTools (icono del cilindro). |
-| **¿Qué?** | Crear la conexión al archivo `.db` de la sesión. |
-| **¿Cuándo?** | **Cada vez** que cambies de sesión o de base de datos. |
-| **¿Por qué?** | Para vincular VS Code con tus datos reales y poder ejecutar consultas. |
+| **¿Qué?** | Crear la conexión al archivo `.db` generado en el paso anterior. |
+| **¿Cuándo?** | **Cada vez** que cambies de laboratorio o de base de datos. |
+| **¿Por qué?** | Para vincular VS Code con tus datos y poder ejecutar consultas. |
 
 **Instrucción:**
 1.  Add New Connection > SQLite.
@@ -129,19 +166,42 @@ git pull upstream main
 
 ---
 
-## Paso 6: Entrega y Calificación 📤
+## Paso 7: Guardar tu Trabajo (Add, Commit & Push) 🚀
+| Pregunta | Respuesta |
+|---|---|
+| **¿Dónde?** | En la Terminal de VS Code (**Carpeta Raíz del proyecto**). |
+| **¿Qué?** | Comandos `add`, `commit` y `push`. |
+| **¿Cuándo?** | **Al final de la clase**, una vez que hayas terminado tus scripts. |
+| **¿Por qué?** | Para que tu avance se guarde en la nube y el profesor pueda calificarlo. |
+
+**Instrucción (El ciclo de 3 pasos):**
+```bash
+git add .
+git commit -m "Solución Sesión 07 terminada"
+git push origin main
+```
+
+> **💡 El "Truco de la Caja" para recordar Git:**
+> 1.  **`git add .`** (Empacar): Metes todos tus cambios dentro de una caja de mudanza.
+> 2.  **`git commit`** (Etiquetar): Le pegas un post-it a la caja diciendo qué hay dentro (ej: "Tarea lista").
+> 3.  **`git push`** (Enviar): Subes la caja al camión para enviarla a GitHub. ¡Si no haces este paso, la caja se queda en tu casa y el profesor no puede verla!
+
+---
+
+## Paso 8: Entrega y Calificación 📤
 | Pregunta | Respuesta |
 |---|---|
 | **¿Dónde?** | En el navegador (Tu perfil de GitHub). |
 | **¿Qué?** | Copiar la URL HTTPS de tu repositorio. |
 | **¿Cuando?** | Una sola vez para registrar tu trabajo con el profesor. |
-| **¿Por qué?** | Para que el profesor pueda entrar a tu código y calificarlo. |
+| **¿Por qué?** | Para que el profesor pueda calificar tu código automáticamente con Antigravity de forma rápida. |
 
 **Instrucción:**
 1.  Entra a GitHub y busca tu repositorio `SQL_NovaMarket`.
-2.  Copia la URL de la barra de direcciones (ej: `https://github.com/TuUsuario/SQL_NovaMarket`).
-3.  **Verificación:** Asegúrate de que el enlace tenga TU nombre de usuario y no el del profesor (`edwardzd`).
-4.  Entrega el link por el medio que se te indique (Classroom, chat, etc.).
+2.  **Enlace Directo (Vía Rápida):** No entregues solo el link del perfil. Entra a la carpeta de la sesión (ej: `02_Sesion_07`) y haz clic en tu archivo de laboratorio (ej: `06_Laboratorio_Consultas.sql`).
+3.  **Copia la URL** de la barra de direcciones (ej: `https://github.com/TuUsuario/SQL_NovaMarket/blob/main/02_Sesion_07/06_Laboratorio_Consultas.sql`).
+4.  **Verificación:** Asegúrate de que el enlace tenga TU nombre de usuario y no el del profesor (`edwardzd`).
+5.  Entrega el link por el medio que se te indique (Classroom, chat, etc.).
 
 ---
 
@@ -173,12 +233,13 @@ Si sientes que tu carpeta se desordenó o algo dejó de funcionar, puedes borrar
 **Lo que NO tienes que repetir:**
 *   ❌ No instales Git de nuevo.
 *   ❌ No instales Python ni las librerías (`pandas`, `openpyxl`).
+*   ❌ No instales Node.js de nuevo.
 *   ❌ No vuelvas a configurar tu nombre y correo.
 
 **Lo ÚNICO que debes hacer:**
 1.  Borra la carpeta física en tu computadora.
-2.  Repite el **Paso 3 (Clone)** para bajar una copia limpia.
-3.  Repite el **Paso 5 (Conexión)** para que SQLTools encuentre la base de datos en su nueva ubicación.
+2.  Repite el **Paso 4 (Clone)** para bajar una copia limpia.
+3.  Repite el **Paso 6 (Conexión)** para que SQLTools encuentre la base de datos en su nueva ubicación.
 
 ---
 
@@ -191,4 +252,35 @@ Si sientes que tu carpeta se desordenó o algo dejó de funcionar, puedes borrar
 5.  **Git es Entregable:** Si no haces `push`, el profesor no puede ver tus respuestas.
 
 ---
-*Sesión 07 | NovaMarket Tech | Configuración con Antigravity*
+
+## Paso 9: Actualizar Material del Curso (Sincronización) 🔄
+| Pregunta | Respuesta |
+|---|---|
+| **¿Dónde?** | En la Terminal de VS Code (**Carpeta Raíz**). |
+| **¿Qué?** | Traer las nuevas carpetas (S8, S9, etc.) desde el repositorio del profesor. |
+| **¿Cuándo?** | **Al inicio de cada nueva sesión**. |
+| **¿Por qué?** | Para tener los laboratorios nuevos sin borrar tus bases de datos o scripts de sesiones anteriores. |
+
+**Instrucción:**
+1.  **Vincular con el profesor (Solo una vez):** Si nunca lo has hecho, dile a Git quién es el profesor:
+    ```bash
+    git remote add upstream https://github.com/edwardzd/SQL_NovaMarket.git
+    ```
+2.  **Traer lo nuevo:** Ejecuta estos dos comandos para descargar las carpetas nuevas y fusionarlas con las tuyas:
+    ```bash
+    git fetch upstream
+    git merge upstream/main
+    ```
+    > **💡 ¿Qué acabas de hacer?**
+    > *   **`fetch`**: Es como ir a la biblioteca del profesor y sacar una **fotocopia** de lo nuevo. Se guarda en un cajón secreto de tu PC sin tocar tus archivos.
+    > *   **`merge`**: Es el acto de **pegar esa fotocopia** en tu cuaderno. Git añade las carpetas nuevas (S8, S9) sin borrar tu trabajo de la S6 y S7.
+
+3.  **En caso de conflictos (Opción quirúrgica):** Si el paso anterior falla o no quieres pelear con Git, usa este comando para traer **solo** la carpeta de la sesión actual (ej: Sesión 8 y 9):
+    ```bash
+    git checkout upstream/main -- 03_Sesion_08_09/
+    ```
+    > **💡 ¿Qué significa este comando?**
+    > Es como entrar a la oficina del profesor y pedirle que te deje copiar **solo una carpeta específica** del semestre, ignorando todo el resto del repositorio. Es la opción más segura si tu Git está dando errores.
+
+---
+*Configuración de Entorno | NovaMarket Tech | Guía de Sincronización*

@@ -19,6 +19,10 @@ SELECT CiudadID,
     COUNT(*) AS Filas
 FROM FactVentas
 GROUP BY CiudadID;
+
+--Respuesta paso 1:
+-- ¿Cuántas filas retorna GROUP BY? Retorna 6 filas.
+-- ¿Por qué? Porque agrupa las 500 filas de ventas en las 6 ciudades únicas.
 -- Paso 2: El veredicto de Leticia con GROUP BY (Usando IDs)
 SELECT CiudadID,
     COUNT(*) AS Transacciones,
@@ -36,6 +40,11 @@ SELECT CiudadID,
 FROM FactVentas
 GROUP BY CiudadID
 ORDER BY Margen_Aproximado ASC;
+
+--Respuesta paso 2:
+-- ¿Qué CiudadID tiene Margen_Aproximado negativo? El CiudadID 6 (Leticia).
+-- ¿Cuánto es esa pérdida? -15.35 (aproximadamente).
+-- ¿Coincide con el número de Power BI de S4? SÍ.
 -- Paso 3: SUM vs AVG
 SELECT CiudadID,
     ROUND(SUM(Costo_Envio), 2) AS Costo_TOTAL,
@@ -43,6 +52,9 @@ SELECT CiudadID,
 FROM FactVentas
 WHERE CiudadID = 6
 GROUP BY CiudadID;
+
+--Respuesta paso 3:
+-- ¿Para decidir si cerrar Leticia, cuál usarías: SUM o AVG? Usaría SUM, porque necesitamos evaluar el total de dinero perdido por la operación, no solo el costo promedio de cada envío.
 -- ══ PARTE 2 — JOIN (Nombres Reales) ════════════════════════════
 -- Paso 4: El primer JOIN: 'Leticia' en lugar de '6'
 SELECT f.TransaccionID,
@@ -53,6 +65,10 @@ FROM FactVentas f
     INNER JOIN DimCiudad c ON f.CiudadID = c.CiudadID
 WHERE c.Ciudad = 'Leticia'
 LIMIT 5;
+
+--Respuesta paso 4:
+-- ¿Qué columna une las dos tablas? La columna CiudadID.
+-- ¿Por qué ahora aparece 'Leticia' y no '6'? Porque el INNER JOIN trajo la columna con el nombre desde la tabla DimCiudad.
 -- Paso 5: Doble JOIN: ciudad Y producto
 SELECT f.TransaccionID,
     c.Ciudad AS Ciudad,
@@ -105,16 +121,46 @@ FROM FactVentas f
     INNER JOIN DimCiudad c ON f.CiudadID = c.CiudadID
 GROUP BY c.Ciudad
 ORDER BY Margen_Aproximado ASC;
+
+--Respuesta Consulta Maestra:
+-- ¿Aparece 'Leticia' con Margen_Aproximado negativo? SÍ.
+-- ¿Cuánto es esa pérdida? -15.35 (aproximadamente).
+-- ¿Coincide este resultado con el dashboard de Power BI de S4? SÍ.
 -- ═══════════════════════════════════════════════════════════════
 -- 🚀 PRÁCTICA AUTÓNOMA (ENTREGABLES)
 -- Escribe tus consultas debajo de cada enunciado.
 -- ═══════════════════════════════════════════════════════════════
 -- E1: (Fácil) Muestra nombre del producto, categoría y venta neta total de cada producto. Ordena de mayor a menor.
--- [Tu código para E1 aquí]
+SELECT 
+    p.Producto, 
+    p.Categoria, 
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct)), 2) AS Venta_Neta
+FROM FactVentas f
+INNER JOIN DimProducto p ON f.ProductoID = p.ProductoID
+GROUP BY p.Producto, p.Categoria
+ORDER BY Venta_Neta DESC;
 -- E2: (Medio) ¿Cuál producto vendió más en Leticia? Usa JOIN + WHERE + GROUP BY.
--- [Tu código para E2 aquí]
+SELECT 
+    p.Producto,
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct)), 2) AS Venta_Neta
+FROM FactVentas f
+INNER JOIN DimCiudad c ON f.CiudadID = c.CiudadID
+INNER JOIN DimProducto p ON f.ProductoID = p.ProductoID
+WHERE c.Ciudad = 'Leticia'
+GROUP BY p.Producto
+ORDER BY Venta_Neta DESC
+LIMIT 1;
 -- E3: (Difícil) Reproduce la tabla del dashboard de S4 completa: Ciudad, Ventas, Utilidad, Margen%. Con nombres reales.
--- [Tu código para E3 aquí]
+SELECT 
+    c.Ciudad,
+    COUNT(*) AS Ventas,
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct)), 2) AS Venta_Neta,
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct) - f.Costo_Envio), 2) AS Utilidad,
+    ROUND((SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct) - f.Costo_Envio) / SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct))) * 100, 2) AS Margen_Pct
+FROM FactVentas f
+INNER JOIN DimCiudad c ON f.CiudadID = c.CiudadID
+GROUP BY c.Ciudad
+ORDER BY Utilidad ASC;
 -- ═══════════════════════════════════════════════════════════════
 -- ¡Fin de la Unidad 2! Prepárate para Python en la Unidad 3.
 -- ═══════════════════════════════════════════════════════════════

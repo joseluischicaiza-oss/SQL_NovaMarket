@@ -16,8 +16,8 @@ def cargar_y_modelar():
         
         # 2. CONSTRUIR DIMENSIONES (NORMALIZACIÓN)
         # Separamos los 4 productos únicos para el diccionario
-        print("Creando Diccionario de Productos...")
-        dim_producto = df[['Producto', 'Categoria']].drop_duplicates().sort_values('Categoria').groupby('Producto').first().reset_index()
+        print("🔨 Creando Diccionario de Productos...")
+        dim_producto = df[['Producto', 'Categoria', 'Precio_Unitario', 'Costo_Unitario']].drop_duplicates().sort_values('Categoria').groupby('Producto').first().reset_index()
         dim_producto.insert(0, 'ProductoID', range(1, len(dim_producto) + 1))
         
         # Separamos las 6 ciudades únicas para el diccionario
@@ -64,7 +64,7 @@ def cargar_y_modelar():
         # Seleccionar columnas finales
         fact_ventas = fact_ventas[[
             'ID_Transaccion', 'FechaID', 'ProductoID', 'CiudadID', 
-            'Cantidad', 'Precio_Unitario', 'Descuento_pct', 'Costo_Envio'
+            'Cantidad', 'Precio_Unitario', 'Costo_Unitario', 'Descuento_pct', 'Costo_Envio'
         ]].rename(columns={'ID_Transaccion': 'TransaccionID', 'Precio_Unitario': 'Precio_Venta', 'Descuento_pct': 'Descuento_Pct'})
 
         # 4. GUARDAR EN LA BASE DE DATOS SQLITE

@@ -90,6 +90,7 @@ SELECT
     ROUND(SUM(Costo_Envio), 2)                             AS Costo_Envio_Total,
     ROUND(SUM(
         Precio_Venta * Cantidad * (1-Descuento_Pct)
+        - Costo_Unitario * Cantidad
         - Costo_Envio
     ), 2)                                                  AS Margen_Aproximado
 FROM FactVentas
@@ -170,6 +171,7 @@ SELECT
     ROUND(SUM(f.Costo_Envio), 2)                           AS Costo_Envio_Total,
     ROUND(SUM(
         f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)
+        - f.Costo_Unitario * f.Cantidad
         - f.Costo_Envio
     ), 2)                                                  AS Margen_Aproximado
 FROM FactVentas f

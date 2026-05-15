@@ -279,7 +279,7 @@ SELECT
     Cantidad,
     Descuento_Pct,
     Costo_Envio,
-    ROUND(Precio_Venta * Cantidad * (1 - Descuento_Pct) - Costo_Envio, 2)
+    ROUND(Precio_Venta * Cantidad * (1 - Descuento_Pct) - Costo_Unitario * Cantidad - Costo_Envio, 2)
         AS Margen_Aproximado
 FROM FactVentas
 ORDER BY Margen_Aproximado ASC
@@ -298,7 +298,7 @@ SELECT
     Cantidad,
     ROUND(Precio_Venta * Cantidad * (1 - Descuento_Pct), 2) AS Venta_Neta,
     Costo_Envio,
-    ROUND(Precio_Venta * Cantidad * (1 - Descuento_Pct) - Costo_Envio, 2)
+    ROUND(Precio_Venta * Cantidad * (1 - Descuento_Pct) - Costo_Unitario * Cantidad - Costo_Envio, 2)
         AS Margen_Aproximado
 FROM FactVentas
 WHERE CiudadID = 6

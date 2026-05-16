@@ -100,8 +100,8 @@ ORDER BY Margen_Aproximado ASC;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Qué CiudadID tiene Margen_Aproximado negativo? | El CiudadID 6 (Leticia). |
-| ¿Cuánto es esa pérdida? | Aproximadamente -15.35 |
+| ¿Qué CiudadID tiene Margen_Aproximado negativo? | El CiudadID 2 (Leticia). |
+| ¿Cuánto es esa pérdida? | Aproximadamente -55886.00 |
 | ¿Coincide con el número de Power BI de S4? | SÍ |
 
 ### Paso 3 — SUM vs AVG: el mismo debate de S2
@@ -112,7 +112,7 @@ SELECT
     ROUND(SUM(Costo_Envio), 2) AS Costo_TOTAL,
     ROUND(AVG(Costo_Envio), 2) AS Costo_PROMEDIO
 FROM FactVentas
-WHERE CiudadID = 6
+WHERE CiudadID = 2
 GROUP BY CiudadID;
 ```
 
@@ -183,7 +183,7 @@ ORDER BY Margen_Aproximado ASC;
 | Pregunta | Tu respuesta |
 |---|---|
 | ¿Aparece 'Leticia' con Margen_Aproximado negativo? | SÍ |
-| ¿Cuánto es esa pérdida? | Aproximadamente -15.35 |
+| ¿Cuánto es esa pérdida? | Aproximadamente -55886.00 |
 | ¿Coincide este resultado con el dashboard de Power BI de S4? | SÍ |
 
 ---
@@ -228,8 +228,8 @@ SELECT
     c.Ciudad,
     COUNT(*) AS Ventas,
     ROUND(SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct)), 2) AS Venta_Neta,
-    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct) - f.Costo_Envio), 2) AS Utilidad,
-    ROUND((SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct) - f.Costo_Envio) / SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct))) * 100, 2) AS Margen_Pct
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct) - f.Costo_Unitario * f.Cantidad - f.Costo_Envio), 2) AS Utilidad,
+    ROUND((SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct) - f.Costo_Unitario * f.Cantidad - f.Costo_Envio) / SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct))) * 100, 2) AS Margen_Pct
 FROM FactVentas f
 INNER JOIN DimCiudad c ON f.CiudadID = c.CiudadID
 GROUP BY c.Ciudad
